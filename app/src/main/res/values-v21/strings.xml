@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="news_fragment_title">新闻</string>
+    <string name="recommend_fragment_title">推荐</string>
+    <string name="music_fragment_title">音乐</string>
+    <string name="movie_fragment_title">电影</string>
+    <string name="dynamic_fragment_title">动态</string>
+    <string name="note_fragment_title">备忘</string>
+    <string name="friends_list">通讯录</string>
+    <string name="camera">拍照</string>
+    <string name="picture">相册</string>
+    <string name="video">视频</string>
+    <string name="setting">设置</string>
+    <string name="share">分享</string>
+</resources>
