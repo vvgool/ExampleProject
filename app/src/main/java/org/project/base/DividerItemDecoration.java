@@ -10,7 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 /**
- * Created by ljdy on 2016/8/18.
+ * Created by wiesen on 2016/8/18.
  */
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     private int mOrientation = LinearLayoutManager.VERTICAL;

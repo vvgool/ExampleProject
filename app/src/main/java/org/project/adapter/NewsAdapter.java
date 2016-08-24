@@ -6,12 +6,12 @@ import android.widget.TextView;
 
 import org.project.R;
 import org.project.base.RecyclerAdapter;
-import org.project.oop.NewsOop;
+import org.project.oop.NewsOOP;
 
 /**
- * Created by ljdy on 2016/8/18.
+ * Created by wiesen on 2016/8/18.
  */
-public class NewsAdapter extends RecyclerAdapter<NewsOop> {
+public class NewsAdapter extends RecyclerAdapter<NewsOOP> {
     public NewsAdapter(Context context) {
         super(context);
     }
@@ -24,7 +24,7 @@ public class NewsAdapter extends RecyclerAdapter<NewsOop> {
 
     @Override
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
-        NewsOop news = getItemData(position);
+        NewsOOP news = getItemData(position);
         if (news == null) return;
         ((TextView)holder.getView(R.id.tv_news_title)).setText(news.mNewsTitle);
         ((ImageView)holder.getView(R.id.iv_news_from_icon)).setImageBitmap(news.mSourceIcon);

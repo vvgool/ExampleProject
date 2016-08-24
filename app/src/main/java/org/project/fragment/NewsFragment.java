@@ -15,7 +15,7 @@ import org.project.adapter.NewsAdapter;
 import org.project.base.App;
 import org.project.base.BaseFragment;
 import org.project.base.DividerItemDecoration;
-import org.project.oop.NewsOop;
+import org.project.oop.NewsOOP;
 
 import java.util.Random;
 
@@ -56,7 +56,7 @@ public class NewsFragment extends BaseFragment {
     private void initData() {
         Random random = new Random();
         for (int i = 0; i < 30; i++) {
-            NewsOop newsOop = new NewsOop();
+            NewsOOP newsOop = new NewsOOP();
             newsOop.mNewsTitle = "宋喆的妻子杨慧，关键人物很少发声，或许事情不是这么简单" + i;
             newsOop.mCommentCount = random.nextInt(100);
             newsOop.mSourceName = "大众娱乐";

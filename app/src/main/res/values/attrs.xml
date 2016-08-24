@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="view_border_size" format="dimension|reference"/>
+    <attr name="view_border_color" format="color|reference"/>
     <declare-styleable name="CircleImageView">
-        <attr name="view_border_size" format="dimension|reference"/>
-        <attr name="view_border_color" format="color|reference"/>
+        <attr name="view_border_size"/>
+        <attr name="view_border_color"/>
+    </declare-styleable>
+    <declare-styleable name="PictureImageView">
+        <attr name="view_border_color"/>
+        <attr name="view_border_size"/>
     </declare-styleable>
 </resources>

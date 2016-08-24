@@ -5,9 +5,9 @@ import android.graphics.Bitmap;
 import java.io.Serializable;
 
 /**
- * Created by ljdy on 2016/8/18.
+ * Created by wiesen on 2016/8/18.
  */
-public class NewsOop implements Serializable {
+public class NewsOOP implements Serializable {
     public String mNewsTitle;
     public Bitmap mSourceIcon;
     public String mSourceName;

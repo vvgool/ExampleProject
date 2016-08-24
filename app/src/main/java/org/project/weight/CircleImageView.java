@@ -1,5 +1,6 @@
-package org.project.base;
+package org.project.weight;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -12,6 +13,7 @@ import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
@@ -20,7 +22,7 @@ import org.project.R;
 import java.io.ByteArrayOutputStream;
 
 /**
- * Created by ljdy on 2016/8/17.
+ * Created by wiesen on 2016/8/17.
  */
 public class CircleImageView extends ImageView {
     private int mCircleBorderSize;
@@ -45,6 +47,7 @@ public class CircleImageView extends ImageView {
         mCircleBorderSize = borderSize;
     }
 
+    @TargetApi(Build.VERSION_CODES.M)
     public void setBorderColor(int borderColor){
         mCircleBorderColor = getContext().getColor(borderColor);
     }

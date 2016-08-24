@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by ljdy on 2016/8/18.
+ * Created by wiesen on 2016/8/18.
  */
 public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder> {
     private LayoutInflater mInflater;
