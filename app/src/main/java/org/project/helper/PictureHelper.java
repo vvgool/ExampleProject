@@ -2,12 +2,16 @@ package org.project.helper;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 
 import org.project.base.App;
 import org.project.oop.PictureOOP;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +21,7 @@ import java.util.Map;
  * Created by wiesen on 16-8-22.
  */
 public class PictureHelper {
+    private static final int BITMAP_COMPRESS_SIZE = 100*1024;
 
     public static boolean getSysPictures(ArrayList<PictureOOP> pictureOOPs){
         if (pictureOOPs != null){
@@ -62,5 +67,46 @@ public class PictureHelper {
 
         }
         return true;
+    }
+
+
+
+
+    public static Bitmap clipBitmap(String filePath,int width,int height){
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        Bitmap clipBitmap=BitmapFactory.decodeFile(filePath,options);
+        if (clipBitmap == null){
+            return null;
+        }
+        options.inJustDecodeBounds = true;
+        int btWidth = options.outWidth;
+        int btHeight = options.outHeight;
+        options.inJustDecodeBounds = false;
+        int scaleSize = 1;
+        if (btWidth > width && btHeight > height){
+            if (btHeight > btWidth){
+                scaleSize = (int)((float)btWidth/(float)width);
+            }else {
+                scaleSize = (int)((float)btHeight/(float)height);
+            }
+        }
+        options.inSampleSize = scaleSize;
+        clipBitmap = BitmapFactory.decodeFile(filePath,options);
+        return pressBitmap(clipBitmap);
+    }
+
+    public static Bitmap pressBitmap(Bitmap bitmap){
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        int pressStride = 90;
+        bitmap.compress(Bitmap.CompressFormat.PNG,pressStride,bos);
+        while (bos.size() > BITMAP_COMPRESS_SIZE){
+                pressStride -= 10;
+            if (pressStride <0) {
+                break;
+            }
+            bos.reset();
+            bitmap.compress(Bitmap.CompressFormat.PNG,pressStride,bos);
+        }
+        return BitmapFactory.decodeByteArray(bos.toByteArray(),0,bos.toByteArray().length);
     }
 }

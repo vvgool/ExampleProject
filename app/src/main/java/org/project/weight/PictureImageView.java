@@ -8,6 +8,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.ThumbnailUtils;
@@ -39,16 +42,25 @@ public class PictureImageView extends ImageView{
         Drawable drawable = getDrawable();
         if (drawable == null) return;
         Bitmap btDrawable = ((BitmapDrawable)drawable).getBitmap();
-        btDrawable = ThumbnailUtils.extractThumbnail(btDrawable,getWidth(),getHeight());
-
         Bitmap dst = drawRoundRect();
         Matrix matrix = new Matrix();
         matrix.postTranslate((getWidth()-dst.getWidth())/2,(getHeight()-dst.getHeight())/2);
         matrix.postRotate(5,dst.getWidth()/2,dst.getHeight()/2);
         canvas.drawBitmap(dst,matrix,null);
         canvas.drawBitmap(dst,(getWidth()-dst.getWidth())/2,(getHeight()-dst.getHeight())/2,null);
-        Bitmap src = Bitmap.createScaledBitmap(btDrawable,dst.getWidth() -mBorderSize*2,dst.getHeight() - mBorderSize*2,false);
-        canvas.drawBitmap(src,(getWidth() - src.getWidth())/2,(getHeight() - src.getHeight())/2,null);
+        canvas.save();
+        int srcWidth = dst.getWidth() -mBorderSize*2;
+        Rect rect = new Rect((getWidth()-srcWidth)/2,(getHeight()-srcWidth)/2,getWidth()/2+srcWidth/2,getHeight()/2+srcWidth/2);
+        canvas.clipRect(rect);
+        int btWidth = btDrawable.getWidth() > btDrawable.getHeight()? btDrawable.getHeight():btDrawable.getWidth();
+        float scalef = srcWidth/(float) btWidth;
+        matrix.reset();
+        matrix.setScale(scalef,scalef);
+
+        btDrawable = Bitmap.createBitmap(btDrawable,(btDrawable.getWidth() - btWidth)/2,
+                (btDrawable.getHeight() - btWidth)/2,btWidth,btWidth,matrix,true);
+        canvas.drawBitmap(btDrawable,rect.left,rect.top,null);
+        canvas.restore();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -63,6 +75,7 @@ public class PictureImageView extends ImageView{
         canvas.drawRoundRect(0,0,bitmap.getWidth(),bitmap.getHeight(),5,5,paint);
         return bitmap;
     }
+
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
