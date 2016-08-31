@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -16,11 +15,12 @@ import android.view.View;
 import org.project.R;
 import org.project.adapter.PhotoAdapter;
 import org.project.base.BaseActivity;
+import org.project.interf.ItemClickListener;
 import org.project.oop.PictureOOP;
 
 import butterknife.BindView;
 
-public class PhotoActivity extends BaseActivity {
+public class PhotoActivity extends BaseActivity implements ItemClickListener {
     @BindView(R.id.tb_photo_toolbar)
     Toolbar mToolbar;
 
@@ -28,6 +28,7 @@ public class PhotoActivity extends BaseActivity {
     RecyclerView mPhotoRecyclerView;
 
     PhotoAdapter mPhotoAdapter;
+    PictureOOP mPictureOOP;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,8 +37,11 @@ public class PhotoActivity extends BaseActivity {
         if (intent == null){
             finish();
         }
-        PictureOOP pictureOOP = (PictureOOP) intent.getSerializableExtra("photos");
-        mToolbar.setTitle(pictureOOP.mParentFileName);
+        mPictureOOP = (PictureOOP) intent.getSerializableExtra("photos");
+        if (mPictureOOP == null){
+            finish();
+        }
+        mToolbar.setTitle(mPictureOOP.mParentFileName);
         mToolbar.setNavigationIcon(R.drawable.back);
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -48,14 +52,24 @@ public class PhotoActivity extends BaseActivity {
         });
 
         mPhotoAdapter = new PhotoAdapter(this);
-        mPhotoAdapter.addAllData(pictureOOP.mPictureUrls);
+        mPhotoAdapter.addAllData(mPictureOOP.mPictureUrls);
         mPhotoRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL));
         mPhotoRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mPhotoRecyclerView.setAdapter(mPhotoAdapter);
+
+        mPhotoAdapter.setOnItemClickListener(this);
     }
 
     @Override
     protected int getContentViewId() {
         return R.layout.activity_photo;
+    }
+
+    @Override
+    public void onItemClickListener(View view, int position) {
+        Intent intent = new Intent(this, PictureBrowseActivity.class);
+        intent.putExtra("photos_browse",mPictureOOP);
+        intent.putExtra("current",position);
+        startActivity(intent);
     }
 }

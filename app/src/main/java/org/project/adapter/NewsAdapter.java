@@ -17,7 +17,7 @@ public class NewsAdapter extends RecyclerAdapter<NewsOOP> {
     }
 
     @Override
-    public int getItemViewId() {
+    public int getItemViewId(int viewType) {
         return R.layout.recy_item_news;
     }
 

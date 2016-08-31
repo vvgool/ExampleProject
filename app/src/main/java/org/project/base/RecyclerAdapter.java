@@ -15,7 +15,7 @@ import java.util.List;
  */
 public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder> {
     private LayoutInflater mInflater;
-    private List<T> mDataList;
+    public List<T> mDataList;
     public Context mContext;
     public RecyclerAdapter(Context context) {
         mContext = context;
@@ -40,11 +40,11 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAd
 
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(getItemViewId(),null);
+        View view = mInflater.inflate(getItemViewId(viewType),null);
         return new RecyclerViewHolder(view);
     }
 
-    public abstract int getItemViewId();
+    public abstract int getItemViewId(int viewType);
 
 
     @Override

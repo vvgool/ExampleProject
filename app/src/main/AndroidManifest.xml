@@ -35,6 +35,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.PhotoActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.PictureBrowseActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.ContactActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

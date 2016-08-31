@@ -137,6 +137,7 @@ public class NavigationActivity extends BaseActivity
             case R.id.nav_slideshow:
                 break;
             case R.id.nav_friends_list:
+                startActivity(new Intent(this,ContactActivity.class));
                 break;
             case R.id.nav_manage:
                 break;

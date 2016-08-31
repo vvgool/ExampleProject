@@ -15,7 +15,9 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import org.project.R;
 import org.project.base.RecyclerAdapter;
+import org.project.helper.ImageLoaderHelper;
 import org.project.helper.PictureHelper;
+import org.project.interf.ItemClickListener;
 import org.project.weight.GridImageView;
 
 /**
@@ -23,31 +25,26 @@ import org.project.weight.GridImageView;
  */
 public class PhotoAdapter extends RecyclerAdapter<String> {
 
-    private final DisplayImageOptions.Builder mDisplayImageOptions;
+
+    private ItemClickListener mItemClickListener;
 
     public PhotoAdapter(Context context) {
         super(context);
-        mDisplayImageOptions = new DisplayImageOptions.Builder()
-                .showImageOnFail(R.drawable.user_icon)
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .imageScaleType(ImageScaleType.EXACTLY);
     }
 
     @Override
-    public int getItemViewId() {
+    public int getItemViewId(int viewType) {
         return R.layout.item_photo;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerViewHolder holder, final int position) {
         String itemData = getItemData(position);
         final GridImageView imageView = holder.getView(R.id.iv_photo);
         String url = "file://"+itemData;
         ImageLoader.getInstance().loadImage(url,
                 new ImageSize(400, 400),
-                mDisplayImageOptions.build(), new ImageLoadingListener() {
+                ImageLoaderHelper.initImageLoaderImageOptions(), new ImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String s, View view) {
 
@@ -55,7 +52,7 @@ public class PhotoAdapter extends RecyclerAdapter<String> {
 
                     @Override
                     public void onLoadingFailed(String s, View view, FailReason failReason) {
-
+                        imageView.setImageResource(R.drawable.user_icon);
                     }
 
                     @Override
@@ -68,6 +65,18 @@ public class PhotoAdapter extends RecyclerAdapter<String> {
 
                     }
                 });
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mItemClickListener != null){
+                    mItemClickListener.onItemClickListener(imageView,position);
+                }
+            }
+        });
 
+    }
+
+    public void setOnItemClickListener(ItemClickListener listener){
+        mItemClickListener = listener;
     }
 }
