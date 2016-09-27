@@ -1,7 +1,9 @@
 package org.project.weight;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,11 +35,25 @@ public class ContactsDisplayView extends RelativeLayout implements SidebarView.S
     private SidebarView mSidebarView;
     private RecyclerView mContactsDisplay;
     private ContactsAdapter mContactAdapter;
+    private List<ContactOOP> mContactsCollection = new ArrayList<>();
 
-    public ContactsDisplayView(Context context, @Nullable AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-
+    public ContactsDisplayView(Context context) {
+        super(context);
     }
+
+    public ContactsDisplayView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public ContactsDisplayView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public ContactsDisplayView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+    }
+
 
     private void initView(){
         if (mSidebarView != null){
@@ -50,11 +66,15 @@ public class ContactsDisplayView extends RelativeLayout implements SidebarView.S
             mContactsDisplay.addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL));
             mContactAdapter = new ContactsAdapter(getContext());
             mContactsDisplay.setAdapter(mContactAdapter);
+            mContactAdapter.addAllData(mContactsCollection);
         }
     }
 
 
     public void addContacts(List<ContactOOP> contactOOPs){
+        if (contactOOPs == null) return;
+        mContactsCollection.clear();
+        mContactsCollection.addAll(contactOOPs);
         if (mContactAdapter != null){
             mContactAdapter.addAllData(contactOOPs);
         }
@@ -63,17 +83,19 @@ public class ContactsDisplayView extends RelativeLayout implements SidebarView.S
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int childCount = getChildCount();
-        for (int i = 0;i<childCount;i++){
-            View childAt = getChildAt(i);
-            if (childAt instanceof SidebarView){
-                mSidebarView = (SidebarView) childAt;
+        if (mSidebarView == null || mContactsDisplay == null) {
+            int childCount = getChildCount();
+            for (int i = 0; i < childCount; i++) {
+                View childAt = getChildAt(i);
+                if (childAt instanceof SidebarView) {
+                    mSidebarView = (SidebarView) childAt;
+                }
+                if (childAt instanceof RecyclerView) {
+                    mContactsDisplay = (RecyclerView) childAt;
+                }
             }
-            if (childAt instanceof RecyclerView){
-                mContactsDisplay = (RecyclerView) childAt;
-            }
+            initView();
         }
-        initView();
     }
 
     @Override
@@ -101,6 +123,7 @@ public class ContactsDisplayView extends RelativeLayout implements SidebarView.S
         }
 
         public void addAllData(List<ContactOOP> list) {
+            mDataList.clear();
             new LoadDataAsy().execute(list);
         }
 
@@ -120,8 +143,9 @@ public class ContactsDisplayView extends RelativeLayout implements SidebarView.S
 
         class LoadDataAsy extends AsyncTask<List<ContactOOP>,Void,Boolean> {
 
+            @SafeVarargs
             @Override
-            protected Boolean doInBackground(List<ContactOOP>... params) {
+            protected final Boolean doInBackground(List<ContactOOP>... params) {
                 List<ContactOOP> contactOOPs = params[0];
                 Pattern pattern = Pattern.compile("[A-Z]");
                 for (ContactOOP contactOOP: contactOOPs){
