@@ -1,8 +1,13 @@
 package org.project.fragment;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.View;
+
 import org.project.R;
 import org.project.base.App;
 import org.project.base.BaseFragment;
+import org.project.module.ticket.TicketManager;
 
 /**
  * Created by ljdy on 2016/8/16.
@@ -16,5 +21,11 @@ public class MovieFragment extends BaseFragment {
     @Override
     public String getTitle() {
         return App.getInstance().getString(R.string.movie_fragment_title);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        TicketManager.requestTicketSource();
     }
 }
