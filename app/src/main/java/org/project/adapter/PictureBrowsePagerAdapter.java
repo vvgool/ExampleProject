@@ -1,18 +1,13 @@
 package org.project.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import org.project.helper.ImageLoaderHelper;
-import org.project.interf.ItemClickListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,8 +61,7 @@ public class PictureBrowsePagerAdapter extends PagerAdapter {
             imageView = mViewCollection.get(url);
         }else {
             imageView = new ImageView(mContext);
-            ImageLoader.getInstance().displayImage("file://"+url, imageView,
-                    ImageLoaderHelper.initImageLoaderImageOptions());
+            ImageLoaderHelper.loadImage(mContext,"file://"+url,imageView);
             mViewCollection.put(url,imageView);
         }
         container.addView(imageView);

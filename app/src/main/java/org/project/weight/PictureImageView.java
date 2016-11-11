@@ -41,26 +41,26 @@ public class PictureImageView extends ImageView{
     protected void onDraw(Canvas canvas) {
         Drawable drawable = getDrawable();
         if (drawable == null) return;
-        Bitmap btDrawable = ((BitmapDrawable)drawable).getBitmap();
+        int viewWidth = getWidth();
+        int viewHeight = getHeight();
         Bitmap dst = drawRoundRect();
         Matrix matrix = new Matrix();
-        matrix.postTranslate((getWidth()-dst.getWidth())/2,(getHeight()-dst.getHeight())/2);
+        matrix.postTranslate((viewWidth-dst.getWidth())/2,(viewHeight-dst.getHeight())/2);
         matrix.postRotate(5,dst.getWidth()/2,dst.getHeight()/2);
         canvas.drawBitmap(dst,matrix,null);
         canvas.drawBitmap(dst,(getWidth()-dst.getWidth())/2,(getHeight()-dst.getHeight())/2,null);
-        canvas.save();
         int srcWidth = dst.getWidth() -mBorderSize*2;
-        Rect rect = new Rect((getWidth()-srcWidth)/2,(getHeight()-srcWidth)/2,getWidth()/2+srcWidth/2,getHeight()/2+srcWidth/2);
-        canvas.clipRect(rect);
-        int btWidth = btDrawable.getWidth() > btDrawable.getHeight()? btDrawable.getHeight():btDrawable.getWidth();
+        Rect rect = new Rect((viewWidth-srcWidth)/2,(viewHeight-srcWidth)/2,viewWidth/2+srcWidth/2,viewHeight/2+srcWidth/2);
+        Rect bounds = drawable.getBounds();
+        int btWidth = bounds.width() > bounds.height()? bounds.height():bounds.width();
         float scalef = srcWidth/(float) btWidth;
-        matrix.reset();
-        matrix.setScale(scalef,scalef);
-
-        btDrawable = Bitmap.createBitmap(btDrawable,(btDrawable.getWidth() - btWidth)/2,
-                (btDrawable.getHeight() - btWidth)/2,btWidth,btWidth,matrix,true);
-        canvas.drawBitmap(btDrawable,rect.left,rect.top,null);
-        canvas.restore();
+        int subWidth = (bounds.width() - btWidth)/2;
+        int subHeight = (bounds.height() - btWidth) /2;
+        drawable.setBounds(bounds.left + subWidth ,bounds.top + subHeight
+        ,bounds.right - subWidth,bounds.bottom - subHeight);
+        canvas.translate(rect.left,rect.top);
+        canvas.scale(scalef,scalef);
+        drawable.draw(canvas);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

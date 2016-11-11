@@ -3,6 +3,7 @@ package org.project.weight;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -20,12 +21,15 @@ public class GridImageView extends ImageView {
     protected void onDraw(Canvas canvas) {
         Drawable drawable = getDrawable();
         if (drawable == null) return;
-        Bitmap btDrawable = ((BitmapDrawable)drawable).getBitmap();
-        int width = btDrawable.getWidth() > btDrawable.getHeight() ?
-                btDrawable.getHeight():btDrawable.getWidth();
-        btDrawable = Bitmap.createBitmap(btDrawable,(btDrawable.getWidth() - width)/2
-                ,(btDrawable.getHeight() -width)/2,width,width);
-        setImageBitmap(btDrawable);
+        Rect bounds = drawable.getBounds();
+        int btWidth = bounds.width() > bounds.height() ?
+                bounds.height():bounds.width();
+        int subWidth = (bounds.width() - btWidth)/2;
+        int subHeight = (bounds.height() - btWidth) /2;
+        drawable.setBounds(bounds.left + subWidth ,bounds.top + subHeight
+                ,bounds.right - subWidth,bounds.bottom - subHeight);
+
+        setImageDrawable(drawable);
         super.onDraw(canvas);
     }
 
