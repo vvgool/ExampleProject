@@ -16,7 +16,7 @@ import org.project.R;
 import org.project.adapter.PhotoAdapter;
 import org.project.base.BaseActivity;
 import org.project.interf.ItemClickListener;
-import org.project.oop.PictureOOP;
+import org.project.entity.PictureOOP;
 
 import butterknife.BindView;
 

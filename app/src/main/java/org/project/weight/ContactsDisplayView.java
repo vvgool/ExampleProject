@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -16,10 +15,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.project.R;
-import org.project.adapter.ContactAdapter;
 import org.project.base.DividerItemDecoration;
 import org.project.helper.HanziHelper;
-import org.project.oop.ContactOOP;
+import org.project.entity.ContactOOP;
 
 import java.util.ArrayList;
 import java.util.HashMap;

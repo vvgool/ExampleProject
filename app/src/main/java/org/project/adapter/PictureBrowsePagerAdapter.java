@@ -61,7 +61,7 @@ public class PictureBrowsePagerAdapter extends PagerAdapter {
             imageView = mViewCollection.get(url);
         }else {
             imageView = new ImageView(mContext);
-            ImageLoaderHelper.loadImage(mContext,"file://"+url,imageView);
+            ImageLoaderHelper.loadImageNormal(mContext,"file://"+url,imageView);
             mViewCollection.put(url,imageView);
         }
         container.addView(imageView);

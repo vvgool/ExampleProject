@@ -7,7 +7,7 @@ import android.widget.TextView;
 import org.project.R;
 import org.project.base.RecyclerAdapter;
 import org.project.helper.HanziHelper;
-import org.project.oop.ContactOOP;
+import org.project.entity.ContactOOP;
 import org.project.weight.SidebarView;
 
 import java.util.ArrayList;

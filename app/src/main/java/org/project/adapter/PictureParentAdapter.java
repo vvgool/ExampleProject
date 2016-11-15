@@ -12,7 +12,7 @@ import org.project.activity.PhotoActivity;
 import org.project.base.RecyclerAdapter;
 import org.project.helper.ImageLoaderHelper;
 import org.project.interf.ItemClickListener;
-import org.project.oop.PictureOOP;
+import org.project.entity.PictureOOP;
 import org.project.weight.PictureImageView;
 
 
@@ -40,7 +40,7 @@ public class PictureParentAdapter extends RecyclerAdapter<PictureOOP> {
             if (pictureOOP.mPictureUrls != null && pictureOOP.mPictureUrls.size() >0){
                 PictureImageView view = holder.getView(R.id.iv_pic_foot);
                 String url = "file://"+pictureOOP.mPictureUrls.get(0);
-                ImageLoaderHelper.loadImage(mContext,url,view);
+                ImageLoaderHelper.loadImageByCenterCrop(mContext,url,view);
 //                Bitmap bitmap = BitmapFactory.decodeFile(pictureOOP.mPictureUrls.get(0));
 //                if (bitmap != null ) {
 //                    view.setImageBitmap(bitmap);

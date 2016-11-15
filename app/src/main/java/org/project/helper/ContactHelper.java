@@ -6,7 +6,7 @@ import android.provider.ContactsContract;
 import android.text.TextUtils;
 
 import org.project.base.App;
-import org.project.oop.ContactOOP;
+import org.project.entity.ContactOOP;
 
 import java.util.List;
 

@@ -2,23 +2,18 @@ package org.project.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import org.project.R;
-import org.project.adapter.ContactAdapter;
 import org.project.base.BaseActivity;
-import org.project.base.DividerItemDecoration;
 import org.project.helper.ContactHelper;
-import org.project.oop.ContactOOP;
+import org.project.entity.ContactOOP;
 import org.project.weight.ContactsDisplayView;
 import org.project.weight.SidebarView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 

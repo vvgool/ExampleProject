@@ -32,7 +32,7 @@ public class PhotoAdapter extends RecyclerAdapter<String> {
         String itemData = getItemData(position);
         final GridImageView imageView = holder.getView(R.id.iv_photo);
         String url = "file://"+itemData;
-        ImageLoaderHelper.loadImage(mContext,url,imageView);
+        ImageLoaderHelper.loadImageByCenterCrop(mContext,url,imageView);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

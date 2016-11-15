@@ -15,7 +15,7 @@ import org.project.R;
 import org.project.adapter.PictureParentAdapter;
 import org.project.base.BaseActivity;
 import org.project.helper.PictureHelper;
-import org.project.oop.PictureOOP;
+import org.project.entity.PictureOOP;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -10,7 +10,7 @@ import android.view.View;
 import org.project.R;
 import org.project.adapter.PictureBrowsePagerAdapter;
 import org.project.base.BaseActivity;
-import org.project.oop.PictureOOP;
+import org.project.entity.PictureOOP;
 
 import butterknife.BindView;
 

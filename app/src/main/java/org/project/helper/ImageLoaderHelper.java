@@ -1,47 +1,45 @@
 package org.project.helper;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import org.project.R;
 
-import java.io.File;
 
 /**
  * Created by wiesen on 16-8-25.
  */
 public class ImageLoaderHelper {
-    private static final String FILE = "file://";
 
-    public static void loadImage(Context context, String url, ImageView view){
-        if (isFile(url)){
-            loadImageByFile(context,url,view,-1);
-        }else {
-            loadImageByUrl(context, url, view, -1);
-        }
+    public static void loadImageByCenterCrop(Context context, String url, ImageView view) {
+        loadImageByCenterCrop(context, url, view, 200, 200);
     }
 
-    public static void loadImageByUrl(Context context, String url, ImageView view, int defaultImage){
-        Glide.with(context)
+    public static void loadImageByCenterCrop(Context context, String url, ImageView view, int width, int height) {
+        Picasso.with(context)
                 .load(url)
-                .error(defaultImage == -1? R.drawable.user_icon:defaultImage)
-                .centerCrop()
-                .into(view);
-
-    }
-
-    public static void loadImageByFile(Context context,String filePath,ImageView view,int defaultImage){
-        Glide.with(context)
-                .load(new File(filePath.replace(FILE,"")))
-                .error(defaultImage == -1? R.drawable.user_icon:defaultImage)
+                .error(R.drawable.user_icon)
+                .resize(width, height)
                 .centerCrop()
                 .into(view);
     }
 
-    private static boolean isFile(String url){
-        return !TextUtils.isEmpty(url)&&url.contains(FILE);
+    public static void loadImageByFit(Context context, String url, ImageView view) {
+        Picasso.with(context)
+                .load(url)
+                .error(R.drawable.user_icon)
+                .fit()
+                .into(view);
     }
+
+    public static void loadImageNormal(Context context, String url, ImageView view) {
+        Picasso.with(context)
+                .load(url)
+                .error(R.drawable.user_icon)
+                .into(view);
+    }
+
+
 }

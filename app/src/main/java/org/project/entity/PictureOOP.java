@@ -1,4 +1,4 @@
-package org.project.oop;
+package org.project.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;

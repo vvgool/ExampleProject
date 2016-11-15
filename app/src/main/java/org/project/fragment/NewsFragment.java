@@ -15,7 +15,10 @@ import org.project.adapter.NewsAdapter;
 import org.project.base.App;
 import org.project.base.BaseFragment;
 import org.project.base.DividerItemDecoration;
-import org.project.oop.NewsOOP;
+import org.project.entity.NewsOOP;
+import org.project.module.news.NewsManager;
+import org.project.net.config.CallBackResponse;
+import org.project.net.news.NewsEntity;
 
 import java.util.Random;
 
@@ -54,15 +57,17 @@ public class NewsFragment extends BaseFragment {
 
 
     private void initData() {
-        Random random = new Random();
-        for (int i = 0; i < 30; i++) {
-            NewsOOP newsOop = new NewsOOP();
-            newsOop.mNewsTitle = "宋喆的妻子杨慧，关键人物很少发声，或许事情不是这么简单" + i;
-            newsOop.mCommentCount = random.nextInt(100);
-            newsOop.mSourceName = "大众娱乐";
-            newsOop.mSourceIcon = ((BitmapDrawable) getResources().getDrawable(R.mipmap.ic_launcher)).getBitmap();
-            mNewsAdapter.addData(newsOop);
-        }
+        NewsManager.Companion.getNewsByType(NewsManager.Companion.getTOP(), new CallBackResponse<NewsEntity>() {
+            @Override
+            public void onSuccess(NewsEntity newsEntity) {
+                mNewsAdapter.addAllData(newsEntity.getData());
+            }
+
+            @Override
+            public void onFail(String msg) {
+
+            }
+        });
 
     }
 
