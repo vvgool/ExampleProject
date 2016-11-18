@@ -1,6 +1,5 @@
 package org.project.fragment;
 
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -15,12 +14,9 @@ import org.project.adapter.NewsAdapter;
 import org.project.base.App;
 import org.project.base.BaseFragment;
 import org.project.base.DividerItemDecoration;
-import org.project.entity.NewsOOP;
 import org.project.module.news.NewsManager;
 import org.project.net.config.CallBackResponse;
 import org.project.net.news.NewsEntity;
-
-import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.project.R;
+import org.project.activity.WebActivity;
 import org.project.base.RecyclerAdapter;
 import org.project.helper.ImageLoaderHelper;
 import org.project.net.news.NewsMessage;
@@ -27,7 +28,7 @@ public class NewsAdapter extends RecyclerAdapter<NewsMessage> {
 
     @Override
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
-        NewsMessage news = getItemData(position);
+        final NewsMessage news = getItemData(position);
         if (news == null) return;
         ((TextView)holder.getView(R.id.tv_news_title)).setText(news.getTitle());
         ((TextView)holder.getView(R.id.tv_news_author)).setText(news.getAuthor_name());
@@ -54,5 +55,11 @@ public class NewsAdapter extends RecyclerAdapter<NewsMessage> {
             pic3.setVisibility(View.VISIBLE);
             ImageLoaderHelper.loadImageByCenterCrop(mContext,news.getThumbnail_pic_s03(),pic3);
         }
+        holder.getView(R.id.rl_news_root).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WebActivity.Companion.goToWebActivity(mContext,news.getUrl());
+            }
+        });
     }
 }

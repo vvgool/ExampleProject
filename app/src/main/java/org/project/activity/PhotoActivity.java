@@ -40,6 +40,7 @@ public class PhotoActivity extends BaseActivity implements ItemClickListener {
         mPictureOOP = (PictureOOP) intent.getSerializableExtra("photos");
         if (mPictureOOP == null){
             finish();
+            return;
         }
         mToolbar.setTitle(mPictureOOP.mParentFileName);
         mToolbar.setNavigationIcon(R.drawable.back);
