@@ -142,9 +142,10 @@ public class NavigationActivity extends BaseActivity
             case R.id.nav_manage:
                 break;
             case R.id.nav_share:
+                startActivity(new Intent(this,ScrollingActivity.class));
                 break;
             case  R.id.nav_send:
-                startActivity(new Intent(this,ScrollingActivity.class));
+                startActivity(new Intent(this,FeedBackActivity.class));
                 break;
         }
 
