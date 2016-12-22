@@ -6,8 +6,8 @@ import android.widget.TextView;
 
 import org.project.R;
 import org.project.base.RecyclerAdapter;
+import org.project.entity.ContactEntity;
 import org.project.helper.HanziHelper;
-import org.project.entity.ContactOOP;
 import org.project.weight.SidebarView;
 
 import java.util.ArrayList;
@@ -20,10 +20,10 @@ import java.util.regex.Pattern;
 /**
  * Created by wiesen on 16-8-29.
  */
-public class ContactAdapter extends RecyclerAdapter<ContactOOP> {
+public class ContactAdapter extends RecyclerAdapter<ContactEntity> {
     private static final int CONTACT_TITLE = 0;
     private static final int CONTACT_ITEM = 1;
-    private Map<String,ArrayList<ContactOOP>> mContactCollection;
+    private Map<String,ArrayList<ContactEntity>> mContactCollection;
     public static final String[] mContent = SidebarView.mContent;
 
 
@@ -35,13 +35,13 @@ public class ContactAdapter extends RecyclerAdapter<ContactOOP> {
 
 
     @Override
-    public void addAllData(List<ContactOOP> list) {
+    public void addAllData(List<ContactEntity> list) {
         new LoadDataAsy().execute(list);
     }
 
     @Override
     public int getItemViewType(int position) {
-        ContactOOP itemData = getItemData(position);
+        ContactEntity itemData = getItemData(position);
         if (itemData.mNumber == null || itemData.mNumber.equals("")){
             return CONTACT_TITLE;
         }
@@ -55,7 +55,7 @@ public class ContactAdapter extends RecyclerAdapter<ContactOOP> {
 
     @Override
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
-        ContactOOP itemData = getItemData(position);
+        ContactEntity itemData = getItemData(position);
         if(CONTACT_ITEM == getItemViewType(position)){
             ((TextView)holder.getView(R.id.tv_host_name)).setText(itemData.mHostName);
             ((TextView)holder.getView(R.id.tv_host_num)).setText(itemData.mNumber);
@@ -64,35 +64,35 @@ public class ContactAdapter extends RecyclerAdapter<ContactOOP> {
         }
     }
 
-    public Map<String, ArrayList<ContactOOP>> getAllContactsMap() {
+    public Map<String, ArrayList<ContactEntity>> getAllContactsMap() {
 
         return mContactCollection;
     }
 
-    class LoadDataAsy extends AsyncTask<List<ContactOOP>,Void,Boolean>{
+    class LoadDataAsy extends AsyncTask<List<ContactEntity>,Void,Boolean>{
 
         @Override
-        protected Boolean doInBackground(List<ContactOOP>... params) {
-            List<ContactOOP> contactOOPs = params[0];
+        protected Boolean doInBackground(List<ContactEntity>... params) {
+            List<ContactEntity> contactEntities = params[0];
             Pattern pattern = Pattern.compile("[A-Z]");
-            for (ContactOOP contactOOP: contactOOPs){
-                String firstName = HanziHelper.hanziToPinyinByFirst(contactOOP.mHostName);
+            for (ContactEntity contactEntity : contactEntities){
+                String firstName = HanziHelper.hanziToPinyinByFirst(contactEntity.mHostName);
                 Matcher matcher = pattern.matcher(firstName);
                 boolean matches = matcher.matches();
                 firstName = matches? firstName: mContent[mContent.length-1];
 
                 if (mContactCollection.containsKey(firstName)){
-                    mContactCollection.get(firstName).add(contactOOP);
+                    mContactCollection.get(firstName).add(contactEntity);
                 }else {
-                    ArrayList<ContactOOP> mapContactOOP = new ArrayList<>();
-                    mapContactOOP.add(contactOOP);
-                    mContactCollection.put(firstName,mapContactOOP);
+                    ArrayList<ContactEntity> mapContactEntity = new ArrayList<>();
+                    mapContactEntity.add(contactEntity);
+                    mContactCollection.put(firstName, mapContactEntity);
                 }
 
             }
             for (String str:mContent){
                 if (mContactCollection.containsKey(str)){
-                    mDataList.add(new ContactOOP(str,null));
+                    mDataList.add(new ContactEntity(str,null));
                     mDataList.addAll(mContactCollection.get(str));
                 }
             }

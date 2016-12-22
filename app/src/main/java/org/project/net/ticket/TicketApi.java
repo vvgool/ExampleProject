@@ -1,11 +1,9 @@
 package org.project.net.ticket;
 
-import org.project.module.ticket.TicketBean;
+import org.project.entity.TicketEntity;
 
-import java.io.Serializable;
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -17,5 +15,5 @@ import retrofit2.http.Query;
 public interface TicketApi {
 
     @GET("http://v.juhe.cn/boxoffice/rank")
-    Call<TicketResponse<List<TicketBean>>> getTicketSource(@Query("key")String key, @Query("area")String area);
+    Call<TicketResponse<List<TicketEntity>>> getTicketSource(@Query("key")String key, @Query("area")String area);
 }

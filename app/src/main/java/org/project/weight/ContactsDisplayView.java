@@ -16,8 +16,8 @@ import android.widget.TextView;
 
 import org.project.R;
 import org.project.base.DividerItemDecoration;
+import org.project.entity.ContactEntity;
 import org.project.helper.HanziHelper;
-import org.project.entity.ContactOOP;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,7 +33,7 @@ public class ContactsDisplayView extends RelativeLayout implements SidebarView.S
     private SidebarView mSidebarView;
     private RecyclerView mContactsDisplay;
     private ContactsAdapter mContactAdapter;
-    private List<ContactOOP> mContactsCollection = new ArrayList<>();
+    private List<ContactEntity> mContactsCollection = new ArrayList<>();
 
     public ContactsDisplayView(Context context) {
         super(context);
@@ -69,12 +69,12 @@ public class ContactsDisplayView extends RelativeLayout implements SidebarView.S
     }
 
 
-    public void addContacts(List<ContactOOP> contactOOPs){
-        if (contactOOPs == null) return;
+    public void addContacts(List<ContactEntity> contactEntities){
+        if (contactEntities == null) return;
         mContactsCollection.clear();
-        mContactsCollection.addAll(contactOOPs);
+        mContactsCollection.addAll(contactEntities);
         if (mContactAdapter != null){
-            mContactAdapter.addAllData(contactOOPs);
+            mContactAdapter.addAllData(contactEntities);
         }
     }
 
@@ -104,12 +104,12 @@ public class ContactsDisplayView extends RelativeLayout implements SidebarView.S
 
     private static class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.RecyclerViewHolder> {
         private LayoutInflater mInflater;
-        public List<ContactOOP> mDataList;
+        public List<ContactEntity> mDataList;
         public Context mContext;
 
         private static final int CONTACT_TITLE = 0;
         private static final int CONTACT_ITEM = 1;
-        private Map<String,ArrayList<ContactOOP>> mContactCollection;
+        private Map<String,ArrayList<ContactEntity>> mContactCollection;
         private static final String[] mContent = SidebarView.mContent;
 
 
@@ -120,14 +120,14 @@ public class ContactsDisplayView extends RelativeLayout implements SidebarView.S
             mContactCollection = new HashMap<>();
         }
 
-        public void addAllData(List<ContactOOP> list) {
+        public void addAllData(List<ContactEntity> list) {
             mDataList.clear();
             new LoadDataAsy().execute(list);
         }
 
         @Override
         public int getItemViewType(int position) {
-            ContactOOP itemData = getItemData(position);
+            ContactEntity itemData = getItemData(position);
             if (itemData.mNumber == null || itemData.mNumber.equals("")){
                 return CONTACT_TITLE;
             }
@@ -139,31 +139,31 @@ public class ContactsDisplayView extends RelativeLayout implements SidebarView.S
         }
 
 
-        class LoadDataAsy extends AsyncTask<List<ContactOOP>,Void,Boolean> {
+        class LoadDataAsy extends AsyncTask<List<ContactEntity>,Void,Boolean> {
 
             @SafeVarargs
             @Override
-            protected final Boolean doInBackground(List<ContactOOP>... params) {
-                List<ContactOOP> contactOOPs = params[0];
+            protected final Boolean doInBackground(List<ContactEntity>... params) {
+                List<ContactEntity> contactEntities = params[0];
                 Pattern pattern = Pattern.compile("[A-Z]");
-                for (ContactOOP contactOOP: contactOOPs){
-                    String firstName = HanziHelper.hanziToPinyinByFirst(contactOOP.mHostName);
+                for (ContactEntity contactEntity : contactEntities){
+                    String firstName = HanziHelper.hanziToPinyinByFirst(contactEntity.mHostName);
                     Matcher matcher = pattern.matcher(firstName);
                     boolean matches = matcher.matches();
                     firstName = matches? firstName: mContent[mContent.length-1];
 
                     if (mContactCollection.containsKey(firstName)){
-                        mContactCollection.get(firstName).add(contactOOP);
+                        mContactCollection.get(firstName).add(contactEntity);
                     }else {
-                        ArrayList<ContactOOP> mapContactOOP = new ArrayList<>();
-                        mapContactOOP.add(contactOOP);
-                        mContactCollection.put(firstName,mapContactOOP);
+                        ArrayList<ContactEntity> mapContactEntity = new ArrayList<>();
+                        mapContactEntity.add(contactEntity);
+                        mContactCollection.put(firstName, mapContactEntity);
                     }
 
                 }
                 for (String str:mContent){
                     if (mContactCollection.containsKey(str)){
-                        mDataList.add(new ContactOOP(str,null));
+                        mDataList.add(new ContactEntity(str,null));
                         mDataList.addAll(mContactCollection.get(str));
                     }
                 }
@@ -177,13 +177,13 @@ public class ContactsDisplayView extends RelativeLayout implements SidebarView.S
             }
         }
 
-        public List<ContactOOP> getAllData(){
+        public List<ContactEntity> getAllData(){
             return mDataList;
         }
 
 
 
-        public ContactOOP getItemData(int position){
+        public ContactEntity getItemData(int position){
             return mDataList.get(position);
         }
 
@@ -195,7 +195,7 @@ public class ContactsDisplayView extends RelativeLayout implements SidebarView.S
 
         @Override
         public void onBindViewHolder(RecyclerViewHolder holder, int position) {
-            ContactOOP itemData = getItemData(position);
+            ContactEntity itemData = getItemData(position);
             if(CONTACT_ITEM == getItemViewType(position)){
                 ((TextView)holder.getView(R.id.tv_host_name)).setText(itemData.mHostName);
                 ((TextView)holder.getView(R.id.tv_host_num)).setText(itemData.mNumber);

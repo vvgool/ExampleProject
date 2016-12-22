@@ -8,7 +8,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 
 import org.project.base.App;
-import org.project.entity.PictureOOP;
+import org.project.entity.PictureEntity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -22,8 +22,8 @@ import java.util.Map;
 public class PictureHelper {
     private static final int BITMAP_COMPRESS_SIZE = 100*1024;
 
-    public static boolean getSysPictures(ArrayList<PictureOOP> pictureOOPs){
-        if (pictureOOPs != null){
+    public static boolean getSysPictures(ArrayList<PictureEntity> pictureEntities){
+        if (pictureEntities != null){
             Map<String,ArrayList<String>> pictures = new HashMap<>();
             Uri mImageUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
             ContentResolver mContentResolver = App.getInstance().getContentResolver();
@@ -56,10 +56,10 @@ public class PictureHelper {
                 }
 
             for (String parentName : pictures.keySet()){
-                PictureOOP pictureOOP = new PictureOOP();
-                pictureOOP.mParentFileName = parentName;
-                pictureOOP.mPictureUrls = pictures.get(parentName);
-                pictureOOPs.add(pictureOOP);
+                PictureEntity pictureEntity = new PictureEntity();
+                pictureEntity.mParentFileName = parentName;
+                pictureEntity.mPictureUrls = pictures.get(parentName);
+                pictureEntities.add(pictureEntity);
             }
             pictures.clear();
             pictures = null;

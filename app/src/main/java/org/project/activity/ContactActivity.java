@@ -7,8 +7,8 @@ import android.view.View;
 
 import org.project.R;
 import org.project.base.BaseActivity;
+import org.project.entity.ContactEntity;
 import org.project.helper.ContactHelper;
-import org.project.entity.ContactOOP;
 import org.project.weight.ContactsDisplayView;
 import org.project.weight.SidebarView;
 
@@ -35,7 +35,7 @@ public class ContactActivity extends BaseActivity implements SidebarView.SideBar
     @BindView(R.id.cv_contact_display)
     ContactsDisplayView mDisplayView;
 
-    private List<ContactOOP> mContacts;
+    private List<ContactEntity> mContacts;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,7 +74,7 @@ public class ContactActivity extends BaseActivity implements SidebarView.SideBar
     @Override
     public void onItemClickListener(String str) {
 //        int position = 0;
-//        Map<String, ArrayList<ContactOOP>> allContacts = mContactAdapter.getAllContactsMap();
+//        Map<String, ArrayList<ContactEntity>> allContacts = mContactAdapter.getAllContactsMap();
 //        for (String tile:ContactAdapter.mContent){
 //            if (str.equals(tile)) break;
 //            if (allContacts.containsKey(tile)) {

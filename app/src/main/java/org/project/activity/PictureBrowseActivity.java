@@ -10,7 +10,7 @@ import android.view.View;
 import org.project.R;
 import org.project.adapter.PictureBrowsePagerAdapter;
 import org.project.base.BaseActivity;
-import org.project.entity.PictureOOP;
+import org.project.entity.PictureEntity;
 
 import butterknife.BindView;
 
@@ -32,10 +32,10 @@ public class PictureBrowseActivity extends BaseActivity {
         if (intent == null){
             finish();
         }
-        PictureOOP pictureOOP = (PictureOOP) intent.getSerializableExtra("photos_browse");
+        PictureEntity pictureEntity = (PictureEntity) intent.getSerializableExtra("photos_browse");
         int currentItem = intent.getIntExtra("current",0);
         mToolbar.setNavigationIcon(R.drawable.back);
-        mToolbar.setTitle(pictureOOP.mParentFileName);
+        mToolbar.setTitle(pictureEntity.mParentFileName);
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,7 +45,7 @@ public class PictureBrowseActivity extends BaseActivity {
         });
 
         mPictureBrowsePagerAdapter = new PictureBrowsePagerAdapter(this);
-        mPictureBrowsePagerAdapter.addAllData(pictureOOP.mPictureUrls);
+        mPictureBrowsePagerAdapter.addAllData(pictureEntity.mPictureUrls);
         mViewPager.setAdapter(mPictureBrowsePagerAdapter);
         mViewPager.setCurrentItem(currentItem);
 

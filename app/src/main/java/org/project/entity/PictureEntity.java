@@ -7,11 +7,11 @@ import java.util.List;
 /**
  * Created by wiesen on 16-8-22.
  */
-public class PictureOOP implements Serializable{
+public class PictureEntity implements Serializable{
    public String mParentFileName;
    public List<String> mPictureUrls;
 
-    public PictureOOP() {
+    public PictureEntity() {
         mPictureUrls = new ArrayList<>();
     }
 }

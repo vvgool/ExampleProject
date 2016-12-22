@@ -16,7 +16,7 @@ import org.project.R;
 import org.project.adapter.PhotoAdapter;
 import org.project.base.BaseActivity;
 import org.project.interf.ItemClickListener;
-import org.project.entity.PictureOOP;
+import org.project.entity.PictureEntity;
 
 import butterknife.BindView;
 
@@ -28,7 +28,7 @@ public class PhotoActivity extends BaseActivity implements ItemClickListener {
     RecyclerView mPhotoRecyclerView;
 
     PhotoAdapter mPhotoAdapter;
-    PictureOOP mPictureOOP;
+    PictureEntity mPictureEntity;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,12 +37,12 @@ public class PhotoActivity extends BaseActivity implements ItemClickListener {
         if (intent == null){
             finish();
         }
-        mPictureOOP = (PictureOOP) intent.getSerializableExtra("photos");
-        if (mPictureOOP == null){
+        mPictureEntity = (PictureEntity) intent.getSerializableExtra("photos");
+        if (mPictureEntity == null){
             finish();
             return;
         }
-        mToolbar.setTitle(mPictureOOP.mParentFileName);
+        mToolbar.setTitle(mPictureEntity.mParentFileName);
         mToolbar.setNavigationIcon(R.drawable.back);
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -53,7 +53,7 @@ public class PhotoActivity extends BaseActivity implements ItemClickListener {
         });
 
         mPhotoAdapter = new PhotoAdapter(this);
-        mPhotoAdapter.addAllData(mPictureOOP.mPictureUrls);
+        mPhotoAdapter.addAllData(mPictureEntity.mPictureUrls);
         mPhotoRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL));
         mPhotoRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mPhotoRecyclerView.setAdapter(mPhotoAdapter);
@@ -69,7 +69,7 @@ public class PhotoActivity extends BaseActivity implements ItemClickListener {
     @Override
     public void onItemClickListener(View view, int position) {
         Intent intent = new Intent(this, PictureBrowseActivity.class);
-        intent.putExtra("photos_browse",mPictureOOP);
+        intent.putExtra("photos_browse", mPictureEntity);
         intent.putExtra("current",position);
         startActivity(intent);
     }

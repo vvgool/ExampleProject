@@ -6,7 +6,7 @@ import android.provider.ContactsContract;
 import android.text.TextUtils;
 
 import org.project.base.App;
-import org.project.entity.ContactOOP;
+import org.project.entity.ContactEntity;
 
 import java.util.List;
 
@@ -19,9 +19,9 @@ public class ContactHelper {
                                                 ContactsContract.CommonDataKinds.Phone.NUMBER
                                                 };
 
-    public static boolean queryContacts(List<ContactOOP> contactOOPs){
+    public static boolean queryContacts(List<ContactEntity> contactEntities){
 
-        if (contactOOPs == null) return false;
+        if (contactEntities == null) return false;
 
         ContentResolver contentResolver = App.getInstance().getContentResolver();
 
@@ -35,8 +35,8 @@ public class ContactHelper {
                         continue;
                     }
                     String hostName = query.getString(query.getColumnIndex(CONTACT_SELECTION[1]));
-                    ContactOOP contactOOP = new ContactOOP(hostName,phoneNumber);
-                    contactOOPs.add(contactOOP);
+                    ContactEntity contactEntity = new ContactEntity(hostName,phoneNumber);
+                    contactEntities.add(contactEntity);
                 }
             }
         }catch (Exception e){

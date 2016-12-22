@@ -28,6 +28,5 @@ public class MovieFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         TicketManager.requestTicketSource();
-        ((LabelView)view.findViewById(R.id.lv_label)).setLabelString("折扣");
     }
 }

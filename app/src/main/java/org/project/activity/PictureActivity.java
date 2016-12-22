@@ -14,8 +14,8 @@ import android.view.View;
 import org.project.R;
 import org.project.adapter.PictureParentAdapter;
 import org.project.base.BaseActivity;
+import org.project.entity.PictureEntity;
 import org.project.helper.PictureHelper;
-import org.project.entity.PictureOOP;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,11 +64,11 @@ public class PictureActivity extends BaseActivity{
         new Thread(new Runnable() {
             @Override
             public void run() {
-                ArrayList<PictureOOP> pictureOOPs = new ArrayList<>();
-                PictureHelper.getSysPictures(pictureOOPs);
+                ArrayList<PictureEntity> pictureEntities = new ArrayList<>();
+                PictureHelper.getSysPictures(pictureEntities);
                 Message message = mHandler.obtainMessage();
                 message.what = 1;
-                message.obj  = pictureOOPs;
+                message.obj  = pictureEntities;
                 mHandler.sendMessage(message);
             }
         }).start();
@@ -80,7 +80,7 @@ public class PictureActivity extends BaseActivity{
             super.handleMessage(msg);
             switch (msg.what){
                 case 1:
-                    mPictureAdapter.addAllData((List<PictureOOP>) msg.obj);
+                    mPictureAdapter.addAllData((List<PictureEntity>) msg.obj);
                     break;
             }
         }
